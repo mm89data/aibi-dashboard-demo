@@ -789,6 +789,10 @@
                 "query": {
                   "fields": [
                     {
+                      "name": "Customers__c_mktsegment",
+                      "expression": "`Customers`.`c_mktsegment`"
+                    },
+                    {
                       "name": "Nations__n_name",
                       "expression": "`Nations`.`n_name`"
                     },
@@ -804,12 +808,12 @@
             "spec": {
               "frame": {
                 "showTitle": true,
-                "title": {
-                  "value": "Revenue by Nation",
-                  "fields": []
-                }
+                "title": "Revenue by Nation & Segment"
               },
               "version": 3,
+              "mark": {
+                "layout": "stack"
+              },
               "widgetType": "bar",
               "encodings": {
                 "x": {
@@ -827,8 +831,8 @@
                   }
                 },
                 "color": {
-                  "fieldName": "Nations__n_name",
-                  "displayName": "Nation",
+                  "fieldName": "Customers__c_mktsegment",
+                  "displayName": "Market Segment",
                   "scale": {
                     "type": "categorical"
                   }
@@ -900,6 +904,65 @@
                     "fieldName": "measure(Line_Items__total_revenue)"
                   }
                 ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 16,
+            "width": 12,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_by_region_pie",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "measure(Line_Items__total_revenue)",
+                      "expression": "MEASURE(`Line_Items`.`total_revenue`)"
+                    },
+                    {
+                      "name": "Regions__r_name",
+                      "expression": "`Regions`.`r_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Revenue by Region",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "measure(Line_Items__total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Total Revenue"
+                },
+                "color": {
+                  "fieldName": "Regions__r_name",
+                  "displayName": "r_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
               },
               "data": {
                 "queryName": "main_query"
@@ -1061,6 +1124,238 @@
         }
       ],
       "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "supplier_analysis",
+      "displayName": "Supplier Analysis",
+      "layout": [
+        {
+          "widget": {
+            "name": "supplier_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "measure(Suppliers__supplier_count)",
+                      "expression": "MEASURE(`Suppliers`.`supplier_count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Supplier Count"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(Suppliers__supplier_count)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "top_suppliers_bar",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Suppliers__s_name",
+                      "expression": "`Suppliers`.`s_name`"
+                    },
+                    {
+                      "name": "measure(Line_Items__total_revenue)",
+                      "expression": "MEASURE(`Line_Items`.`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Top Suppliers by Revenue",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Suppliers__s_name",
+                  "displayName": "s_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(Line_Items__total_revenue)",
+                  "displayName": "Total Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Suppliers__s_name",
+                  "displayName": "s_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "supplier_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Suppliers__s_name",
+                      "expression": "`Suppliers`.`s_name`"
+                    },
+                    {
+                      "name": "Nations__n_name",
+                      "expression": "`Nations`.`n_name`"
+                    },
+                    {
+                      "name": "measure(Line_Items__total_revenue)",
+                      "expression": "MEASURE(`Line_Items`.`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Supplier Details",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "Suppliers__s_name"
+                  },
+                  {
+                    "fieldName": "Nations__n_name"
+                  },
+                  {
+                    "fieldName": "measure(Line_Items__total_revenue)"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 3,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "supplier_scatter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "fields": [
+                    {
+                      "name": "Suppliers__s_acctbal",
+                      "expression": "`Suppliers`.`s_acctbal`"
+                    },
+                    {
+                      "name": "measure(Line_Items__total_revenue)",
+                      "expression": "MEASURE(`Line_Items`.`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Supplier Balance vs Revenue"
+              },
+              "version": 3,
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "Suppliers__s_acctbal",
+                  "displayName": "Account Balance",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(Line_Items__total_revenue)",
+                  "displayName": "Total Revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 10,
+            "width": 12,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
       "layoutVersion": "GRID_V1"
     }
   ],
