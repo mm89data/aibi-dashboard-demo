@@ -13,3 +13,8 @@ Each prompt auto-commits via the `dashboard-git-versioning` skill.
 ## Data Source
 
 `samples.tpch` (TPC-H benchmark): orders, lineitem, customer, nation, region, supplier
+
+## Git Versioning
+
+Each prompt commits changes via the `dashboard-git-versioning` skill.
+Full audit trail: model → build → iterate.
